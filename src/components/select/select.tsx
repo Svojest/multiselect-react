@@ -2,7 +2,7 @@ import { IUser } from '@/data'
 import { cn } from '@nextui-org/theme'
 import { Check, ChevronDown, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
 import { ReactNode, useEffect, useRef, useState } from 'react'
-import { animate, AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { itemVariants, itemVariantsScale, variants } from '@/lib/animations'
 import { useClickOutside } from '@/hooks/use-click-outside'
 

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { IUser, users } from '../data'
 import { title } from '@/components/primitives'
 import { Avatar } from '@nextui-org/avatar'
-import { cn } from '@nextui-org/theme'
 
 export default function IndexPage() {
 	const [options, setOptions] = useState<IUser[]>(users)
