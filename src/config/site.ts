@@ -60,7 +60,7 @@ export const siteConfig = {
 		}
 	],
 	links: {
-		github: 'https://github.com/Svojest/todo-ts',
+		github: 'https://github.com/Svojest/multiselect-react',
 		telegram: 'https://t.me/svojest'
 	}
 }
