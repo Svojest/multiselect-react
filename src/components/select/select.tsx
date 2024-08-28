@@ -94,7 +94,7 @@ export const Select = ({
 	// скролл до низа контейнера при открытии dropdown (доработать)
 	// useEffect(() => {
 	// 	if (isOpen && ulRef.current) {
-	// 		window.scrollTo({
+	// 		window.scrollBy({
 	// 			top: ulRef.current.offsetHeight,
 	// 			behavior: 'smooth'
 	// 		})
@@ -231,7 +231,7 @@ export const Select = ({
 
 				{/* ========= OPTIONS ======== */}
 				<AnimatePresence mode='wait'>
-					{isOpen ? (
+					{options.length ? (
 						<motion.ul
 							variants={variants}
 							initial='closed'
