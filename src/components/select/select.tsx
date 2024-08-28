@@ -91,15 +91,15 @@ export const Select = ({
 		setHighlightIndex(index)
 	}
 
-	// скролл до низа контейнера при открытии dropdown
-	useEffect(() => {
-		if (isOpen && ulRef.current) {
-			window.scrollBy({
-				top: ulRef.current.offsetHeight,
-				behavior: 'smooth'
-			})
-		}
-	}, [isOpen])
+	// скролл до низа контейнера при открытии dropdown (доработать)
+	// useEffect(() => {
+	// 	if (isOpen && ulRef.current) {
+	// 		window.scrollTo({
+	// 			top: ulRef.current.offsetHeight,
+	// 			behavior: 'smooth'
+	// 		})
+	// 	}
+	// }, [isOpen])
 
 	useEffect(() => {
 		if (multiple) {
@@ -230,12 +230,13 @@ export const Select = ({
 				</div>
 
 				{/* ========= OPTIONS ======== */}
-				{options.length ? (
-					<AnimatePresence mode='wait'>
+				<AnimatePresence mode='wait'>
+					{isOpen ? (
 						<motion.ul
 							variants={variants}
 							initial='closed'
-							animate={isOpen ? 'open' : 'closed'}
+							animate='open'
+							exit='closed'
 							ref={ulRef}
 							className={cn(
 								isOpen ? 'absolute' : 'hidden',
@@ -307,8 +308,8 @@ export const Select = ({
 								</li>
 							)}
 						</motion.ul>
-					</AnimatePresence>
-				) : null}
+					) : null}
+				</AnimatePresence>
 			</article>
 		</>
 	)
