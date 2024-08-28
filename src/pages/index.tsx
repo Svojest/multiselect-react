@@ -8,8 +8,8 @@ import { Avatar } from '@nextui-org/avatar'
 export default function IndexPage() {
 	const [options, setOptions] = useState<IUser[]>(users)
 	const [value1, setValue1] = useState<IUser | undefined>()
-	const [value3, setValue3] = useState<IUser | undefined>()
 	const [value2, setValue2] = useState<IUser[]>([])
+	const [value3, setValue3] = useState<IUser | undefined>()
 	const [value4, setValue4] = useState<IUser[]>([])
 
 	const handleAddOption = (newOption: IUser) => {
@@ -28,7 +28,6 @@ export default function IndexPage() {
 							value={value1}
 							onChangeSelect={o => setValue1(o)}
 							onAddOption={handleAddOption}
-							renderOption={option => <div>{option.name}</div>}
 						/>
 					</div>
 				</section>
@@ -44,6 +43,14 @@ export default function IndexPage() {
 							value={value2}
 							onChangeSelect={o => setValue2(o)}
 							onAddOption={handleAddOption}
+							renderValue={value => (
+								<div className='flex items-center gap-[12px] w-full'>
+									<Avatar src={value.avatar} className='w-[16px] h-[16px]' />
+									<div className='flex flex-col'>
+										<p className='text-[15px] font-semibold'>{value.name}</p>
+									</div>
+								</div>
+							)}
 							renderOption={option => (
 								<div className='flex items-center gap-[12px] py-2 w-full'>
 									<Avatar src={option.avatar} size='sm' />
@@ -55,14 +62,6 @@ export default function IndexPage() {
 										>
 											{option.email}
 										</p>
-									</div>
-								</div>
-							)}
-							renderValue={value => (
-								<div className='flex items-center gap-[12px] w-full'>
-									<Avatar src={value.avatar} className='w-[16px] h-[16px]' />
-									<div className='flex flex-col'>
-										<p className='text-[15px] font-semibold'>{value.name}</p>
 									</div>
 								</div>
 							)}
@@ -93,14 +92,6 @@ export default function IndexPage() {
 									</div>
 								</div>
 							)}
-							renderValue={value => (
-								<div className='flex items-center gap-[12px] w-full'>
-									<Avatar src={value.avatar} className='w-[16px] h-[16px]' />
-									<div className='flex flex-col'>
-										<p className='text-[15px] font-semibold'>{value.name}</p>
-									</div>
-								</div>
-							)}
 						/>
 					</div>
 				</section>
@@ -116,32 +107,11 @@ export default function IndexPage() {
 							value={value4}
 							onChangeSelect={o => setValue4(o)}
 							onAddOption={handleAddOption}
-							// renderOption={option => (
-							// 	<div className='flex items-center gap-[12px] py-2 w-full'>
-							// 		<Avatar src={option.avatar} size='sm' />
-							// 		<div className='flex flex-col'>
-							// 			<p className='text-[15px] font-semibold'>{option.name}</p>
-							// 			<p
-							// 				className='text-[13px] text-black/40 line-clamp-1'
-							// 				style={{ wordBreak: 'break-all' }}
-							// 			>
-							// 				{option.email}
-							// 			</p>
-							// 		</div>
-							// 	</div>
-							// )}
-							// renderValue={value => (
-							// 	<div className='flex items-center gap-[12px] w-full'>
-							// 		<Avatar src={value.avatar} className='w-[16px] h-[16px]' />
-							// 		<div className='flex flex-col'>
-							// 			<p className='text-[15px] font-semibold'>{value.name}</p>
-							// 		</div>
-							// 	</div>
-							// )}
 						/>
 					</div>
 				</section>
 			</div>
+			<p className='text-center'>Accessibility in work...</p>
 		</DefaultLayout>
 	)
 }

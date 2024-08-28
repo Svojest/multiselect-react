@@ -49,7 +49,7 @@ export const Select = ({
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newValue = e.target.value
 		setInputValue(newValue)
-		setIsOpen(newValue !== '')
+		setIsOpen(true)
 	}
 
 	const isOptionSelected = (option: IUser) => {
@@ -62,11 +62,13 @@ export const Select = ({
 				? (value as IUser[]).filter(v => v !== option)
 				: [...(value as IUser[]), option]
 			onChangeSelect(newValue)
+			setInputValue('')
 			inputRef.current?.focus()
 		} else {
 			if (option !== value) {
 				onChangeSelect(option)
 				setInputValue(option.name)
+
 				setIsOpen(false)
 			}
 		}
@@ -77,10 +79,7 @@ export const Select = ({
 	)
 
 	const handleTriggerClick = () => {
-		setIsOpen(prev => !prev)
-		if (multiple) {
-			inputRef.current?.focus()
-		}
+		setIsOpen(true)
 	}
 
 	const handleOptionClick = (option: IUser) => {
@@ -91,6 +90,23 @@ export const Select = ({
 		setHighlightIndex(index)
 	}
 
+	const handleCreateOption = () => {
+		const newOption = { id: Number(new Date()), name: inputValue }
+		onAddOption && onAddOption(newOption)
+		selectOption(newOption)
+
+		if (multiple) {
+			setInputValue('')
+		} else {
+			setInputValue(newOption.name)
+		}
+		setIsOpen(false)
+	}
+
+	useEffect(() => {
+		if (isOpen && inputRef.current) inputRef.current.focus()
+	}, [isOpen])
+
 	// скролл до низа контейнера при открытии dropdown (доработать)
 	// useEffect(() => {
 	// 	if (isOpen && ulRef.current) {
@@ -100,18 +116,6 @@ export const Select = ({
 	// 		})
 	// 	}
 	// }, [isOpen])
-
-	useEffect(() => {
-		if (multiple) {
-			setInputValue('')
-		} else if (value) {
-			setInputValue((value as IUser).name)
-		}
-	}, [value, multiple])
-
-	useEffect(() => {
-		if (isOpen) setHighlightIndex(0)
-	}, [isOpen])
 
 	// подсчёт ширины инпута у multi варианта
 	useEffect(() => {
@@ -166,7 +170,7 @@ export const Select = ({
 											size={16}
 											strokeWidth={3}
 											onClick={e => {
-												e.preventDefault()
+												e.stopPropagation()
 												selectOption(v)
 											}}
 											className='transition duration-300 cursor-pointer opacity-30 hover:opacity-100 ease-soft-spring'
@@ -185,6 +189,7 @@ export const Select = ({
 							<>
 								<SearchIcon size={20} className={cn('text-black/30 dark:text-white/30')} />
 								<input
+									ref={inputRef}
 									placeholder='Placeholder'
 									value={inputValue}
 									onChange={handleInputChange}
@@ -195,6 +200,7 @@ export const Select = ({
 					) : (
 						<>
 							<input
+								ref={inputRef}
 								placeholder='Placeholder'
 								value={inputValue}
 								onChange={handleInputChange}
@@ -230,8 +236,8 @@ export const Select = ({
 				</div>
 
 				{/* ========= OPTIONS ======== */}
-				<AnimatePresence mode='wait'>
-					{options.length ? (
+				<AnimatePresence>
+					{isOpen ? (
 						<motion.ul
 							variants={variants}
 							initial='closed'
@@ -289,13 +295,7 @@ export const Select = ({
 								))
 							) : (
 								<li
-									onClick={() => {
-										const newOption = { id: Number(new Date()), name: inputValue }
-										onAddOption && onAddOption(newOption)
-										selectOption(newOption)
-										setIsOpen(false)
-										setInputValue('')
-									}}
+									onClick={handleCreateOption}
 									className={cn(
 										'px-[12px] min-h-[36px]',
 										'flex gap-2 items-center',
