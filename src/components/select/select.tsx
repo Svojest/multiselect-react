@@ -92,14 +92,14 @@ export const Select = ({
 	}
 
 	// скролл до низа контейнера при открытии dropdown
-	// useEffect(() => {
-	// 	if (isOpen && ulRef.current) {
-	// 		window.scrollTo({
-	// 			top: ulRef.current.offsetHeight - 100,
-	// 			behavior: 'smooth'
-	// 		})
-	// 	}
-	// }, [isOpen])
+	useEffect(() => {
+		if (isOpen && ulRef.current) {
+			window.scrollBy({
+				top: ulRef.current.offsetHeight,
+				behavior: 'smooth'
+			})
+		}
+	}, [isOpen])
 
 	useEffect(() => {
 		if (multiple) {
