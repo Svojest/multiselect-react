@@ -142,7 +142,6 @@ export const Select = ({
 	// 	if (isOpen && ulRef.current) {
 	// 		window.scrollBy({
 	// 			top: ulRef.current.offsetHeight,
-	// 			behavior: 'smooth'
 	// 		})
 	// 	}
 	// }, [isOpen])
