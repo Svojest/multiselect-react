@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { IUser, users } from '../data'
 import { title } from '@/components/primitives'
 import { Avatar } from '@nextui-org/avatar'
+import { formatUserName } from '@/lib/utils'
 
 export default function IndexPage() {
 	const [options, setOptions] = useState<IUser[]>(users)
@@ -47,7 +48,7 @@ export default function IndexPage() {
 								<div className='flex items-center gap-[12px] w-full'>
 									<Avatar src={value.avatar} className='w-[16px] h-[16px]' />
 									<div className='flex flex-col'>
-										<p className='text-[15px] font-semibold'>{value.name}</p>
+										<p className='text-[15px] font-semibold'>{formatUserName(value.name)}</p>
 									</div>
 								</div>
 							)}
@@ -111,7 +112,6 @@ export default function IndexPage() {
 					</div>
 				</section>
 			</div>
-			<p className='text-center'>Accessibility in work...</p>
 		</DefaultLayout>
 	)
 }

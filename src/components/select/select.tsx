@@ -86,6 +86,36 @@ export const Select = ({
 		selectOption(option)
 	}
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		switch (e.key) {
+			case 'ArrowDown':
+				e.preventDefault()
+				setHighlightIndex(prev => (prev + 1) % filteredOptions.length)
+				optionRefs.current[highlightIndex]?.focus()
+				break
+			case 'ArrowUp':
+				e.preventDefault()
+				setHighlightIndex(prev => (prev - 1 + filteredOptions.length) % filteredOptions.length)
+				optionRefs.current[highlightIndex]?.focus()
+				break
+			case 'Enter':
+			case ' ':
+				e.preventDefault()
+				if (isOpen) {
+					const selectedOption = filteredOptions[highlightIndex]
+					if (selectedOption) {
+						selectOption(selectedOption)
+					}
+				} else {
+					setIsOpen(true)
+				}
+				break
+			case 'Escape':
+				setIsOpen(false)
+				break
+		}
+	}
+
 	const handleOptionMouseEnter = (index: number) => {
 		setHighlightIndex(index)
 	}
@@ -137,7 +167,11 @@ export const Select = ({
 
 	return (
 		<>
-			<article className='space-y-[8px] relative w-full' ref={containerRef}>
+			<article
+				className='space-y-[8px] relative w-full'
+				ref={containerRef}
+				onKeyDown={handleKeyDown}
+			>
 				<label className='text-[15px] font-semibold'>Title</label>
 
 				{/* ========= VALUE ======== */}
@@ -249,7 +283,7 @@ export const Select = ({
 								'top-[calc(100%_+_0.25rem) z-50',
 								'p-[4px] space-y-1 max-h-[300px] w-full',
 								'border border-black/10 rounded-lg bg-white shadow-large dark:bg-neutral-900',
-								'overflow-y-auto'
+								'overflow-y-auto outline-none'
 							)}
 						>
 							{filteredOptions.length ? (
@@ -267,7 +301,7 @@ export const Select = ({
 											'px-[12px] min-h-[36px]',
 											'flex gap-2 items-center justify-between',
 											'text-[15px] font-medium',
-											'rounded-lg cursor-pointer',
+											'rounded-lg cursor-pointer outline-none',
 											highlightIndex === index ? 'bg-black/5 dark:bg-white/5' : null,
 											option.status === 'paused'
 												? '!opacity-50 pointer-events-none select-none'
